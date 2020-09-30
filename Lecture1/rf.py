@@ -138,7 +138,7 @@ def parse_args():
 
 def gridSearch_rf(train_data, test_data):
     number_of_features = len(train_data[0, :])
-    num_of_trees_list = range(10, 25, 1)
+    num_of_trees_list = range(10, 160, 10)
     features_percent_list = np.linspace(0.1, 0.99, 10)
     precision = []
     recall = []
