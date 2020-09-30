@@ -24,9 +24,26 @@ def main():
 
     train_data = np.loadtxt(args.train)
     test_data  = np.loadtxt(args.test)
-    
-
     total_data = np.concatenate(([train_data, test_data]), axis=0)
+   
+    #classes vizualization in train/test data
+#     pca = PCA(n_components=2)
+#     projection = pca.fit_transform(total_data)
+#     test_size = len(test_data[:,0])
+#     train_size = len(train_data[:,0])
+#     first_class_x = [projection[i+train_size, 0] for i in range(test_size) if int(test_data[0::, 0][i])==1]
+#     zero_class_x = [projection[i+train_size, 0] for i in range(test_size) if int(test_data[0::, 0][i])==0]
+#     first_class_y = [projection[i+train_size, 1] for i in range(test_size) if int(test_data[0::, 0][i])==1]
+#     zero_class_y = [projection[i+train_size, 1] for i in range(test_size) if int(test_data[0::, 0][i])==0]
+#     fig = pl.figure(figsize=(8, 8))
+#     pl.rcParams['legend.fontsize'] = 10
+#     pl.plot(first_class_x, first_class_y,
+#             'o', markersize=7, color='blue', alpha=0.5)
+#     pl.plot(zero_class_x, zero_class_y,
+#             'o', markersize=7, color='red', alpha=0.5)
+#     pl.legend(['1', '0'])
+#     pl.title('Test data')
+#     pl.show()
 
     #visualize_data(total_data[0::, 1::], len(train_data[:,0]), len(test_data[:,0]))
     number_of_features = len(train_data[0, :])
@@ -40,7 +57,6 @@ def main():
     for name, model in zip(['Random Forest:', 'KNN:', 'LogReg:', 'Naive Bayes:', 'SVM:'], [forest, knn, log_reg, gnb, svm]):
         prediction = model.fit(train_data[0::, 1::], train_data[0::, 0]).predict(test_data[0::, 1::])
         print (classification_report(name, test_data[0::, 0], prediction))
-        
     gridSearch_rf(train_data, test_data)
 
 
@@ -58,9 +74,10 @@ def visualize_data(total_data, train_size, test_size):
 
     pl.rcParams['legend.fontsize'] = 10
     pl.plot(projection[0:train_size, 0], projection[0:train_size, 1],
-            'o', markersize=7, color='blue', alpha=0.5, label='Train')
+            'o', markersize=7, color='blue', alpha=0.5)
     pl.plot(projection[train_size:train_size+test_size, 0], projection[train_size:train_size+test_size, 1],
-            'o', markersize=7, color='red', alpha=0.5, label='Test')
+            'o', markersize=7, color='red', alpha=0.5)
+    pl.legend(['train', 'test'])
     pl.title('Spam data')
     pl.show()
 
