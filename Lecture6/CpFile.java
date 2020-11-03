@@ -11,7 +11,7 @@ public class CpFile {
     public static void main(String[] args) throws Exception{
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        String substr = ":///";
+        String substr = "Sphere"; //root of local repository
         int num = args.length;
         if (args[num-2].contains(substr) && args[num-1].contains(substr)){
             File srcFile = new File(args[num-2]);
